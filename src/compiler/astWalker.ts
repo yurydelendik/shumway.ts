@@ -575,6 +575,14 @@ module TypeScript {
     childrenWalkers[SyntaxKind.VariableStatement] = walkVariableStatementChildren;
     childrenWalkers[SyntaxKind.VoidExpression] = walkVoidExpressionChildren;
     childrenWalkers[SyntaxKind.VoidKeyword] = null;
+    childrenWalkers[SyntaxKind.Int8Keyword] = null;
+    childrenWalkers[SyntaxKind.Int16Keyword] = null;
+    childrenWalkers[SyntaxKind.Int32Keyword] = null;
+    childrenWalkers[SyntaxKind.Uint8Keyword] = null;
+    childrenWalkers[SyntaxKind.Uint16Keyword] = null;
+    childrenWalkers[SyntaxKind.Uint32Keyword] = null;
+    childrenWalkers[SyntaxKind.Float32Keyword] = null;
+    childrenWalkers[SyntaxKind.Float64Keyword] = null;
     childrenWalkers[SyntaxKind.WhileStatement] = walkWhileStatementChildren;
     childrenWalkers[SyntaxKind.WithStatement] = walkWithStatementChildren;
 

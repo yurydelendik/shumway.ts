@@ -4654,6 +4654,14 @@ module TypeScript.Parser {
                 case SyntaxKind.BooleanKeyword:
                 case SyntaxKind.StringKeyword:
                 case SyntaxKind.VoidKeyword:
+                case SyntaxKind.Int8Keyword:
+                case SyntaxKind.Int16Keyword:
+                case SyntaxKind.Int32Keyword:
+                case SyntaxKind.Uint8Keyword:
+                case SyntaxKind.Uint16Keyword:
+                case SyntaxKind.Uint32Keyword:
+                case SyntaxKind.Float32Keyword:
+                case SyntaxKind.Float64Keyword:
 
                 // Object type
                 case SyntaxKind.OpenBraceToken:
@@ -4708,6 +4716,14 @@ module TypeScript.Parser {
                 case SyntaxKind.BooleanKeyword:
                 case SyntaxKind.StringKeyword:
                 case SyntaxKind.VoidKeyword:
+                case SyntaxKind.Int8Keyword:
+                case SyntaxKind.Int16Keyword:
+                case SyntaxKind.Int32Keyword:
+                case SyntaxKind.Uint8Keyword:
+                case SyntaxKind.Uint16Keyword:
+                case SyntaxKind.Uint32Keyword:
+                case SyntaxKind.Float32Keyword:
+                case SyntaxKind.Float64Keyword:
                     return this.eatAnyToken();
 
                 // Object type

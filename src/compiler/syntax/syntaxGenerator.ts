@@ -2573,6 +2573,13 @@ function firstEnumName(e: any, value: number) {
     }
 }
 
+function prefixNumericCharacterCodes(s: any) {
+  if (s[0] >= 0 && s[0] <= 9) {
+    return "_" + s;
+  }
+  return s;
+}
+
 function generateKeywordCondition(keywords: { text: string; kind: TypeScript.SyntaxKind; }[], currentCharacter: number, indent: string): string {
     var length = keywords[0].text.length;
 
@@ -2595,7 +2602,7 @@ function generateKeywordCondition(keywords: { text: string; kind: TypeScript.Syn
             }
 
             index = i === 0 ? "startIndex" : ("startIndex + " + i);
-            result += "array[" + index + "] === CharacterCodes." + keywordText.substr(i, 1);
+            result += "array[" + index + "] === CharacterCodes." + prefixNumericCharacterCodes(keywordText.substr(i, 1));
         }
 
         result += ") ? SyntaxKind." + firstEnumName(TypeScript.SyntaxKind, keyword.kind) + " : SyntaxKind.IdentifierName;\r\n";
@@ -2608,7 +2615,7 @@ function generateKeywordCondition(keywords: { text: string; kind: TypeScript.Syn
 
         for (var c in groupedKeywords) {
             if (groupedKeywords.hasOwnProperty(c)) {
-                result += indent + "case CharacterCodes." + c + ":\r\n";
+                result += indent + "case CharacterCodes." + prefixNumericCharacterCodes(c) + ":\r\n";
                 result += indent + "    // " + TypeScript.ArrayUtilities.select(groupedKeywords[c], (k: any) => k.text).join(", ") + "\r\n";
                 result += generateKeywordCondition(groupedKeywords[c], currentCharacter + 1, indent + "    ");
             }
@@ -2816,10 +2823,14 @@ var scannerUtilities = generateScannerUtilities();
 var visitor = generateVisitor();
 var factory = generateFactory();
 
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxNodes.generated.ts", syntaxNodes, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxRewriter.generated.ts", rewriter, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxToken.generated.ts", tokens, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxWalker.generated.ts", walker, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\scannerUtilities.generated.ts", scannerUtilities, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxVisitor.generated.ts", visitor, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxFactory.generated.ts", factory, false);
+var path = require("path");
+
+TypeScript.Environment.writeFile(path.join(TypeScript.Environment.currentDirectory(), "src", "compiler", "syntax", "syntaxNodes.generated.ts"), syntaxNodes, false);
+TypeScript.Environment.writeFile(path.join(TypeScript.Environment.currentDirectory(), "src", "compiler", "syntax", "syntaxRewriter.generated.ts"), rewriter, false);
+TypeScript.Environment.writeFile(path.join(TypeScript.Environment.currentDirectory(), "src", "compiler", "syntax", "syntaxToken.generated.ts"), tokens, false);
+TypeScript.Environment.writeFile(path.join(TypeScript.Environment.currentDirectory(), "src", "compiler", "syntax", "syntaxWalker.generated.ts"), walker, false);
+TypeScript.Environment.writeFile(path.join(TypeScript.Environment.currentDirectory(), "src", "compiler", "syntax", "scannerUtilities.generated.ts"), scannerUtilities, false);
+TypeScript.Environment.writeFile(path.join(TypeScript.Environment.currentDirectory(), "src", "compiler", "syntax", "syntaxVisitor.generated.ts"), visitor, false);
+TypeScript.Environment.writeFile(path.join(TypeScript.Environment.currentDirectory(), "src", "compiler", "syntax", "syntaxFactory.generated.ts"), factory, false);
+
+console.info(path.join(TypeScript.Environment.currentDirectory(), "src", "compiler", "syntax", "scannerUtilities.generated.ts"));

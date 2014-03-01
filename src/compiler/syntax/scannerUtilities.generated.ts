@@ -5,14 +5,17 @@ module TypeScript {
         public static identifierKind(array: number[], startIndex: number, length: number): SyntaxKind {
             switch (length) {
             case 2:
-                // do, if, in
+                // do, if, in, i8, u8
             switch(array[startIndex]) {
             case CharacterCodes.d:
                 // do
                 return (array[startIndex + 1] === CharacterCodes.o) ? SyntaxKind.DoKeyword : SyntaxKind.IdentifierName;
             case CharacterCodes.i:
-                // if, in
+                // if, in, i8
                 switch(array[startIndex + 1]) {
+                case CharacterCodes._8:
+                    // i8
+                    return SyntaxKind.Int8Keyword;
                 case CharacterCodes.f:
                     // if
                     return SyntaxKind.IfKeyword;
@@ -23,16 +26,32 @@ module TypeScript {
                     return SyntaxKind.IdentifierName;
                 }
 
+            case CharacterCodes.u:
+                // u8
+                return (array[startIndex + 1] === CharacterCodes._8) ? SyntaxKind.Uint8Keyword : SyntaxKind.IdentifierName;
             default:
                 return SyntaxKind.IdentifierName;
             }
 
             case 3:
-                // for, new, try, var, let, any, get, set
+                // for, new, try, var, let, any, get, set, i16, i32, u16, u32, f32, f64
             switch(array[startIndex]) {
             case CharacterCodes.f:
-                // for
-                return (array[startIndex + 1] === CharacterCodes.o && array[startIndex + 2] === CharacterCodes.r) ? SyntaxKind.ForKeyword : SyntaxKind.IdentifierName;
+                // for, f32, f64
+                switch(array[startIndex + 1]) {
+                case CharacterCodes._3:
+                    // f32
+                    return (array[startIndex + 2] === CharacterCodes._2) ? SyntaxKind.Float32Keyword : SyntaxKind.IdentifierName;
+                case CharacterCodes._6:
+                    // f64
+                    return (array[startIndex + 2] === CharacterCodes._4) ? SyntaxKind.Float64Keyword : SyntaxKind.IdentifierName;
+                case CharacterCodes.o:
+                    // for
+                    return (array[startIndex + 2] === CharacterCodes.r) ? SyntaxKind.ForKeyword : SyntaxKind.IdentifierName;
+                default:
+                    return SyntaxKind.IdentifierName;
+                }
+
             case CharacterCodes.n:
                 // new
                 return (array[startIndex + 1] === CharacterCodes.e && array[startIndex + 2] === CharacterCodes.w) ? SyntaxKind.NewKeyword : SyntaxKind.IdentifierName;
@@ -54,6 +73,32 @@ module TypeScript {
             case CharacterCodes.s:
                 // set
                 return (array[startIndex + 1] === CharacterCodes.e && array[startIndex + 2] === CharacterCodes.t) ? SyntaxKind.SetKeyword : SyntaxKind.IdentifierName;
+            case CharacterCodes.i:
+                // i16, i32
+                switch(array[startIndex + 1]) {
+                case CharacterCodes._1:
+                    // i16
+                    return (array[startIndex + 2] === CharacterCodes._6) ? SyntaxKind.Int16Keyword : SyntaxKind.IdentifierName;
+                case CharacterCodes._3:
+                    // i32
+                    return (array[startIndex + 2] === CharacterCodes._2) ? SyntaxKind.Int32Keyword : SyntaxKind.IdentifierName;
+                default:
+                    return SyntaxKind.IdentifierName;
+                }
+
+            case CharacterCodes.u:
+                // u16, u32
+                switch(array[startIndex + 1]) {
+                case CharacterCodes._1:
+                    // u16
+                    return (array[startIndex + 2] === CharacterCodes._6) ? SyntaxKind.Uint16Keyword : SyntaxKind.IdentifierName;
+                case CharacterCodes._3:
+                    // u32
+                    return (array[startIndex + 2] === CharacterCodes._2) ? SyntaxKind.Uint32Keyword : SyntaxKind.IdentifierName;
+                default:
+                    return SyntaxKind.IdentifierName;
+                }
+
             default:
                 return SyntaxKind.IdentifierName;
             }

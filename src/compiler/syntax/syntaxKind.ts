@@ -91,6 +91,17 @@ module TypeScript {
         RequireKeyword,
         NumberKeyword,
         SetKeyword,
+
+        // Machine Types
+        Int8Keyword,
+        Int16Keyword,
+        Int32Keyword,
+        Uint8Keyword,
+        Uint16Keyword,
+        Uint32Keyword,
+        Float32Keyword,
+        Float64Keyword,
+
         StringKeyword,
 
         // Punctuators

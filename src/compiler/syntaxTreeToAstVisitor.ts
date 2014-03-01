@@ -210,6 +210,22 @@ module TypeScript {
                     return new BuiltInType(SyntaxKind.StringKeyword, token.text(), token.valueText());
                 case SyntaxKind.VoidKeyword:
                     return new BuiltInType(SyntaxKind.VoidKeyword, token.text(), token.valueText());
+                case SyntaxKind.Int8Keyword:
+                  return new BuiltInType(SyntaxKind.Int8Keyword, token.text(), token.valueText());
+                case SyntaxKind.Int16Keyword:
+                  return new BuiltInType(SyntaxKind.Int16Keyword, token.text(), token.valueText());
+                case SyntaxKind.Int32Keyword:
+                  return new BuiltInType(SyntaxKind.Int32Keyword, token.text(), token.valueText());
+                case SyntaxKind.Uint8Keyword:
+                  return new BuiltInType(SyntaxKind.Uint8Keyword, token.text(), token.valueText());
+                case SyntaxKind.Uint16Keyword:
+                  return new BuiltInType(SyntaxKind.Uint16Keyword, token.text(), token.valueText());
+                case SyntaxKind.Uint32Keyword:
+                  return new BuiltInType(SyntaxKind.Uint32Keyword, token.text(), token.valueText());
+                case SyntaxKind.Float32Keyword:
+                  return new BuiltInType(SyntaxKind.Float32Keyword, token.text(), token.valueText());
+                case SyntaxKind.Float64Keyword:
+                  return new BuiltInType(SyntaxKind.Float64Keyword, token.text(), token.valueText());
                 case SyntaxKind.ThisKeyword:
                     return new ThisExpression(token.text(), token.valueText());
                 case SyntaxKind.SuperKeyword:

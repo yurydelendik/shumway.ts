@@ -58,6 +58,15 @@ module TypeScript.SyntaxFacts {
         "with": SyntaxKind.WithKeyword,
         "yield": SyntaxKind.YieldKeyword,
 
+        "i8": SyntaxKind.Int8Keyword,
+        "i16": SyntaxKind.Int16Keyword,
+        "i32": SyntaxKind.Int32Keyword,
+        "u8": SyntaxKind.Uint8Keyword,
+        "u16": SyntaxKind.Uint16Keyword,
+        "u32": SyntaxKind.Uint32Keyword,
+        "f32": SyntaxKind.Float32Keyword,
+        "f64": SyntaxKind.Float64Keyword,
+
         "{": SyntaxKind.OpenBraceToken,
         "}": SyntaxKind.CloseBraceToken,
         "(": SyntaxKind.OpenParenToken,
