@@ -793,7 +793,8 @@ module TypeScript {
                 if (equalsValueClause) {
                     this.emitIndent();
                     this.recordSourceMappingStart(arg);
-                    this.writeToOutput("if (typeof " + id.text() + " === \"undefined\") { ");//
+                    // this.writeToOutput("if (typeof " + id.text() + " === \"undefined\") { "); //
+                    this.writeToOutput("if (arguments.length < " + (i + 1) + ") { "); //
                     this.writeToOutputWithSourceMapRecord(id.text(), id);
                     this.emitJavascript(equalsValueClause, false);
                     this.writeLineToOutput("; }");
