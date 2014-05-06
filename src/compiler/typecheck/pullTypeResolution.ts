@@ -2796,6 +2796,7 @@ module TypeScript {
                 case SyntaxKind.NumberKeyword: return this.semanticInfoChain.numberTypeSymbol;
                 case SyntaxKind.StringKeyword: return this.semanticInfoChain.stringTypeSymbol;
                 case SyntaxKind.VoidKeyword: return this.semanticInfoChain.voidTypeSymbol;
+                case SyntaxKind.Int32Keyword: return this.semanticInfoChain.i32TypeSymbol;
             }
 
             var typeDeclSymbol: PullTypeSymbol = null;

@@ -24,11 +24,13 @@ module TypeScript {
         public nullTypeDecl: PullDecl = null;
         public undefinedTypeDecl: PullDecl = null;
         public voidTypeDecl: PullDecl = null;
+        public i32TypeDecl: PullDecl = null;
         public undefinedValueDecl: PullDecl = null;
 
         public anyTypeSymbol: PullPrimitiveTypeSymbol = null;
         public booleanTypeSymbol: PullPrimitiveTypeSymbol = null;
         public numberTypeSymbol: PullPrimitiveTypeSymbol = null;
+        public i32TypeSymbol: PullPrimitiveTypeSymbol = null;
         public stringTypeSymbol: PullPrimitiveTypeSymbol = null;
         public nullTypeSymbol: PullPrimitiveTypeSymbol = null;
         public undefinedTypeSymbol: PullPrimitiveTypeSymbol = null;
@@ -63,6 +65,7 @@ module TypeScript {
             this.numberTypeDecl = new NormalPullDecl("number", "number", PullElementKind.Primitive, PullElementFlags.None, globalDecl);
             this.stringTypeDecl = new NormalPullDecl("string", "string", PullElementKind.Primitive, PullElementFlags.None, globalDecl);
             this.voidTypeDecl = new NormalPullDecl("void", "void", PullElementKind.Primitive, PullElementFlags.None, globalDecl);
+            this.i32TypeDecl = new NormalPullDecl("i32", "i32", PullElementKind.Primitive, PullElementFlags.None, globalDecl);
             
             // add the global primitive values for "null" and "undefined"
             // Because you cannot reference them by name, they're not parented by any actual decl.
@@ -123,6 +126,7 @@ module TypeScript {
             this.numberTypeSymbol = this.addPrimitiveTypeSymbol(this.numberTypeDecl);
             this.stringTypeSymbol = this.addPrimitiveTypeSymbol(this.stringTypeDecl);
             this.voidTypeSymbol = this.addPrimitiveTypeSymbol(this.voidTypeDecl);
+            this.i32TypeSymbol = this.addPrimitiveTypeSymbol(this.i32TypeDecl);
             this.nullTypeSymbol = this.addPrimitiveTypeSymbol(this.nullTypeDecl);
             this.undefinedTypeSymbol = this.addPrimitiveTypeSymbol(this.undefinedTypeDecl);
             this.undefinedValueSymbol = this.addPrimitiveValueSymbol(this.undefinedValueDecl, this.undefinedTypeSymbol);
