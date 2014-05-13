@@ -793,7 +793,11 @@ module TypeScript {
                 if (equalsValueClause) {
                     this.emitIndent();
                     this.recordSourceMappingStart(arg);
-                    // this.writeToOutput("if (typeof " + id.text() + " === \"undefined\") { "); //
+                    if (this.emitOptions.compilationSettings().shumwayMode()) {
+                        this.writeToOutput("if (arguments.length < " + (i + 1) + ") { "); //
+                    } else {
+                        this.writeToOutput("if (typeof " + id.text() + " === \"undefined\") { "); //
+                    }
                     this.writeToOutput("if (arguments.length < " + (i + 1) + ") { "); //
                     this.writeToOutputWithSourceMapRecord(id.text(), id);
                     this.emitJavascript(equalsValueClause, false);
@@ -1744,6 +1748,9 @@ module TypeScript {
         // - It is an exported member of the current module, but is never defined in this particular module
         // declaration (i.e. it is only defined in other components of the same merged module)
         private shouldQualifySymbolNameWithParentName(symbol: PullSymbol): boolean {
+            if (this.emitOptions.compilationSettings().shumwayMode()) {
+                return false;
+            }
             var enclosingContextDeclPath = this.declStack;
             var symbolDeclarations = symbol.getDeclarations();
             for (var i = 0; i < symbolDeclarations.length; i++) {
@@ -1815,6 +1822,7 @@ module TypeScript {
                         if (PullHelpers.symbolIsModule(pullSymbolContainer) || pullSymbolContainerKind === PullElementKind.Enum ||
                             pullSymbolContainer.anyDeclHasFlag(PullElementFlags.InitializedModule | PullElementFlags.Enum)) {
                             var needToEmitParentName = this.shouldQualifySymbolNameWithParentName(pullSymbol);
+
                             if (needToEmitParentName) {
                                 var parentDecl = pullSymbol.getDeclarations()[0].getParentDecl();
                                 Debug.assert(parentDecl && !parentDecl.isRootDecl());

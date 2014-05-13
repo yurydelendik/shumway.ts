@@ -22,6 +22,7 @@ module TypeScript {
         public gatherDiagnostics: boolean = false;
         public codepage: number = null
         public createFileLog: boolean = false;
+        public shumwayMode: boolean = false;
     }
 
     export class ImmutableCompilationSettings {
@@ -46,6 +47,7 @@ module TypeScript {
         private _gatherDiagnostics: boolean;
         private _codepage: number;
         private _createFileLog: boolean;
+        private _shumwayMode: boolean;
 
         public propagateEnumConstants() { return this._propagateEnumConstants; }
         public removeComments() { return this._removeComments; }
@@ -66,6 +68,7 @@ module TypeScript {
         public gatherDiagnostics() { return this._gatherDiagnostics; }
         public codepage() { return this._codepage; }
         public createFileLog() { return this._createFileLog; }
+        public shumwayMode() { return this._shumwayMode; }
 
         constructor(
             propagateEnumConstants: boolean,
@@ -86,7 +89,8 @@ module TypeScript {
             useCaseSensitiveFileResolution: boolean,
             gatherDiagnostics: boolean,
             codepage: number,
-            createFileLog: boolean) {
+            createFileLog: boolean,
+            shumwayMode: boolean) {
 
             this._propagateEnumConstants = propagateEnumConstants;
             this._removeComments = removeComments;
@@ -107,6 +111,7 @@ module TypeScript {
             this._gatherDiagnostics = gatherDiagnostics;
             this._codepage = codepage;
             this._createFileLog = createFileLog;
+            this._shumwayMode = shumwayMode;
         }
 
         public static defaultSettings() {
@@ -137,7 +142,8 @@ module TypeScript {
                 settings.useCaseSensitiveFileResolution,
                 settings.gatherDiagnostics,
                 settings.codepage,
-                settings.createFileLog);
+                settings.createFileLog,
+                settings.shumwayMode);
         }
 
         public toCompilationSettings(): any {

@@ -395,6 +395,10 @@ module TypeScript {
                 }
             });
 
+            opts.flag('shumwayMode', {
+                set: () => { mutableSettings.shumwayMode = true; }
+            });
+
             opts.option('target', {
                 usage: {
                     locCode: DiagnosticCode.Specify_ECMAScript_target_version_0_default_or_1,
