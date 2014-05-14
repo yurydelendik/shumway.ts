@@ -798,7 +798,6 @@ module TypeScript {
                     } else {
                         this.writeToOutput("if (typeof " + id.text() + " === \"undefined\") { "); //
                     }
-                    this.writeToOutput("if (arguments.length < " + (i + 1) + ") { "); //
                     this.writeToOutputWithSourceMapRecord(id.text(), id);
                     this.emitJavascript(equalsValueClause, false);
                     this.writeLineToOutput("; }");
@@ -1748,9 +1747,6 @@ module TypeScript {
         // - It is an exported member of the current module, but is never defined in this particular module
         // declaration (i.e. it is only defined in other components of the same merged module)
         private shouldQualifySymbolNameWithParentName(symbol: PullSymbol): boolean {
-            if (this.emitOptions.compilationSettings().shumwayMode()) {
-                return false;
-            }
             var enclosingContextDeclPath = this.declStack;
             var symbolDeclarations = symbol.getDeclarations();
             for (var i = 0; i < symbolDeclarations.length; i++) {
@@ -1780,7 +1776,6 @@ module TypeScript {
                     return false;
                 }
             }
-
             return true;
         }
 
@@ -1821,13 +1816,29 @@ module TypeScript {
 
                         if (PullHelpers.symbolIsModule(pullSymbolContainer) || pullSymbolContainerKind === PullElementKind.Enum ||
                             pullSymbolContainer.anyDeclHasFlag(PullElementFlags.InitializedModule | PullElementFlags.Enum)) {
-                            var needToEmitParentName = this.shouldQualifySymbolNameWithParentName(pullSymbol);
 
-                            if (needToEmitParentName) {
-                                var parentDecl = pullSymbol.getDeclarations()[0].getParentDecl();
-                                Debug.assert(parentDecl && !parentDecl.isRootDecl());
-                                this.writeToOutput(this.getModuleName(parentDecl, /* changeNameIfAnyDeclarationInContext */ true) + ".");
+                            var symbol = pullSymbol;
+                            var path = "";
+                            while (symbol) {
+                                var needToEmitParentName = this.shouldQualifySymbolNameWithParentName(symbol);
+                                if (needToEmitParentName) {
+                                    var parentDecl = symbol.getDeclarations()[0].getParentDecl();
+                                    Debug.assert(parentDecl && !parentDecl.isRootDecl());
+                                    path = this.getModuleName(parentDecl, /* changeNameIfAnyDeclarationInContext */ true) + "." + path;
+                                    symbol = symbol.getContainer();
+                                } else {
+                                    break;
+                                }
                             }
+                            if (path) {
+                                this.writeToOutput(path);
+                            }
+                            // var needToEmitParentName = this.shouldQualifySymbolNameWithParentName(pullSymbol);
+                            // if (needToEmitParentName) {
+                            //     var parentDecl = pullSymbol.getDeclarations()[0].getParentDecl();
+                            //     Debug.assert(parentDecl && !parentDecl.isRootDecl());
+                            //     this.writeToOutput(this.getModuleName(parentDecl, /* changeNameIfAnyDeclarationInContext */ true) + ".");
+                            // }
                         }
                         else if (pullSymbolContainerKind === PullElementKind.DynamicModule ||
                             pullSymbolContainer.anyDeclHasFlag(PullElementFlags.InitializedDynamicModule)) {
