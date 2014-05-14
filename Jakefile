@@ -14,6 +14,7 @@ var builtDirectory = "built/";
 var builtLocalDirectory = "built/local/";
 var builtTestDirectory = "built/localtest/";
 var LKGDirectory = "bin/";
+var shumwayDirectory = "shumway/";
 
 var copyright = "CopyrightNotice.txt";
 var thirdParty = "ThirdPartyNoticeText.txt";
@@ -334,6 +335,13 @@ task("clean", function() {
 	jake.rmRf(builtDirectory);
 });
 
+// Prerequisite task for shumway
+directory(shumwayDirectory);
+
+task('shumway', ["local"], function () {
+	jake.mkdirP(shumwayDirectory);
+	jake.cpR(tscFile, shumwayDirectory);
+});
 
 // Makes a new LKG. This target does not build anything, but errors if not all the outputs are present in the built/local directory
 desc("Makes a new LKG out of the built js files");
